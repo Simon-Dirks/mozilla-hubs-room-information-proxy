@@ -1,2 +1,2 @@
-# mozilla-hubs-room-information-proxy
-Created with CodeSandbox
+# Mozilla Hubs: Room Information Proxy
+Retrieves information from (favorite) Mozilla rooms, caching results.
