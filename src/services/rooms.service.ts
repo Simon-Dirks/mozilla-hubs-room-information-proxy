@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { RoomDataWrapper } from '../models/RoomDataWrapper';
 import { HttpService } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RoomsService {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService,
+              private configService: ConfigService) {}
 
   private lastRetrieved = 0;
   private rooms: RoomDataWrapper = {
@@ -63,11 +65,11 @@ export class RoomsService {
   }
 
   private async retrieveRooms(): Promise<RoomDataWrapper> {
-    const url = process.env.FAVORITES_URL;
+    const url = this.configService.get<string>('FAVORITES_URL');
 
     const requestHeaders = {
       'Content-Type': 'application/json',
-      Authorization: `${process.env.HUBS_TOKEN}`,
+      Authorization: `${this.configService.get<string>('HUBS_TOKEN')}`,
     };
     const response: any = await this.http
       .get(url, { headers: requestHeaders })
