@@ -6,7 +6,7 @@ import { HttpService } from '@nestjs/common';
 export class RoomsService {
   constructor(private http: HttpService) {}
 
-  private lastRetrieved: number = 0;
+  private lastRetrieved = 0;
   private rooms: RoomDataWrapper = {
     meta: {
       source: 'favorites',
@@ -63,14 +63,11 @@ export class RoomsService {
   }
 
   private async retrieveRooms(): Promise<RoomDataWrapper> {
-    const url =
-      'https://hubs.mozilla.com/api/v1/media/search?source=favorites&type=rooms&user=671602397209952644&cursor=0';
-    const token =
-      'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJyZXQiLCJleHAiOjE2MTIwMDk0MDMsImlhdCI6MTYwNDc1MTgwMywiaXNzIjoicmV0IiwianRpIjoiMzYwMjc1NWItNzU3Yy00MjIwLTk3ODMtYzAyNjg5MTViYWU4IiwibmJmIjoxNjA0NzUxODAyLCJzdWIiOiI2NzE2MDIzOTcyMDk5NTI2NDQiLCJ0eXAiOiJhY2Nlc3MifQ.wiXFDBRaMlD3ot2C82MUpQI8Zjr7JXthkzp6IrrlxatcF5O1JQvNTXmUKNBqjALZtvXMj9V1eAanef1aTFeflQ';
+    const url = process.env.FAVORITES_URL;
 
     const requestHeaders = {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `${process.env.HUBS_TOKEN}`,
     };
     const response: any = await this.http
       .get(url, { headers: requestHeaders })
