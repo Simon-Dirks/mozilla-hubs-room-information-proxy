@@ -8,7 +8,7 @@ import { EasyconfigModule } from 'nestjs-easyconfig/dist/easyconfig.module';
 @Module({
   imports: [
     HttpModule,
-    EasyconfigModule.register({ path: './.env', safe: true }),
+    // EasyconfigModule.register({ path: './.env', safe: true }),
   ],
   controllers: [AppController],
   providers: [AppService, RoomsService],
